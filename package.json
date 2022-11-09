@@ -6,76 +6,84 @@
     "license": "UNLICENSED",
     "private": true,
     "dependencies": {
-      "@sap/cds": "^6",
-      "@sap/hdbext": "^7.6.6",
-      "express": "^4",
-      "hdb": "^0.19.0",
-      "sap-hdbext-promisfied": "^2.202201.1"
+        "@sap/cds": "^6",
+        "@sap/hdbext": "^7.6.6",
+        "express": "^4",
+        "hdb": "^0.19.0",
+        "sap-hdbext-promisfied": "^2.202201.1"
     },
     "devDependencies": {
-      "@sap/hdi-deploy": "^4.2.3"
+        "@sap/hdi-deploy": "^4.2.3",
+        "@sap/ux-specification": "^1.102.11",
+        "rimraf": "^3.0.2"
     },
     "scripts": {
-      "start": "cds run"
+        "start": "cds run",
+        "watch-project1": "cds watch --open project1/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy TestSample1109 --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
     },
     "engines": {
-      "node": "^16.15"
+        "node": "^16.15"
     },
     "eslintConfig": {
-      "extends": "eslint:recommended",
-      "env": {
-        "es2020": true,
-        "node": true,
-        "jest": true,
-        "mocha": true
-      },
-      "globals": {
-        "SELECT": true,
-        "INSERT": true,
-        "UPDATE": true,
-        "DELETE": true,
-        "CREATE": true,
-        "DROP": true,
-        "CDL": true,
-        "CQL": true,
-        "CXL": true,
-        "cds": true
-      },
-      "rules": {
-        "no-console": "off",
-        "require-atomic-updates": "off"
-      }
+        "extends": "eslint:recommended",
+        "env": {
+            "es2020": true,
+            "node": true,
+            "jest": true,
+            "mocha": true
+        },
+        "globals": {
+            "SELECT": true,
+            "INSERT": true,
+            "UPDATE": true,
+            "DELETE": true,
+            "CREATE": true,
+            "DROP": true,
+            "CDL": true,
+            "CQL": true,
+            "CXL": true,
+            "cds": true
+        },
+        "rules": {
+            "no-console": "off",
+            "require-atomic-updates": "off"
+        }
     },
     "cds": {
-      "requires": {
-        "db": {
-          "kind": "hana-cloud"
-        },
-        "uaa": {
-          "kind": "xsuaa",
-          "credentials": {}
-        },
-        "auth": {
-          "kind": "basic-auth",
-          "users": {
-            "cpi_integration": {
-              "password": "Sap12345",
-              "roles": [
-                "admin",
-                "authenticated-user"
-              ]
+        "requires": {
+            "db": {
+                "kind": "hana-cloud"
+            },
+            "uaa": {
+                "kind": "xsuaa",
+                "credentials": {}
+            },
+            "auth": {
+                "kind": "basic-auth",
+                "users": {
+                    "cpi_integration": {
+                        "password": "Sap12345",
+                        "roles": [
+                            "admin",
+                            "authenticated-user"
+                        ]
+                    }
+                }
+            },
+            "[production]": {
+                "db": {
+                    "kind": "hana-cloud"
+                }
             }
-          }
         },
-        "[production]": {
-          "db": {
-            "kind": "hana-cloud"
-          }
+        "hana": {
+            "deploy-format": "hdbtable"
         }
-      },
-      "hana": {
-        "deploy-format": "hdbtable"
-      }
-    }
-  }
-  
+    },
+    "sapux": [
+        "app/project1"
+    ]
+}

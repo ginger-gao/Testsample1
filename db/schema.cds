@@ -10,11 +10,12 @@ using{
 from '@sap/cds/common';
 
 entity Products : cuid, managed{
-    title : localized String(111);
+   key ID : Integer;
+    title : String(111);
     stock: Integer;
     price: Decimal(9,2);
-    currency: Currency;
-    category: Association to Categories;
+   // currency: Currency;
+    //category: Association to Categories;
 
 }
 
